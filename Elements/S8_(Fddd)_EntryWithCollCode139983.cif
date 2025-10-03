@@ -1,0 +1,110 @@
+
+#(C) 2025 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
+data_139983-ICSD
+_database_code_ICSD 139983
+_audit_creation_date 2025-02-01
+_chemical_name_common cyclo-Octasulfur
+_chemical_formula_structural S8
+_chemical_formula_sum S8
+_chemical_name_structure_type S8(Fddd)
+_exptl_crystal_density_diffrn 2.07
+_diffrn_ambient_temperature 296.
+_citation_title
+
+;
+Iodine-catalyzed synthesis of benzo-Î²-carbolines through desulfurative
+cyclization of 2-(1H-Indol-3-ylsulfanyl)-phenylamines with aryl methyl ketones
+;
+loop_
+_citation_id
+_citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Journal of Organic Chemistry' 2023 88 12783 12791 JOCEAH
+loop_
+_citation_author_citation_id
+_citation_author_name
+primary 'Marupalli, Sasi Sree'
+primary 'Arockiaraj, Mariyaraj'
+primary 'Singh, Gargi'
+primary 'Rajeshkumar, Venkatachalam'
+_cell_length_a 10.4510(6)
+_cell_length_b 12.8711(6)
+_cell_length_c 24.4649(14)
+_cell_angle_alpha 90.
+_cell_angle_beta 90.
+_cell_angle_gamma 90.
+_cell_volume 3290.92
+_cell_formula_units_Z 16
+_space_group_name_H-M_alt 'F d d d S'
+_space_group_IT_number 70
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 'x+1/4, y+1/4, -z+1/4'
+2 '-x+1/4, y+1/4, z+1/4'
+3 '-x, -y, z'
+4 'x, -y, -z'
+5 'x+1/4, -y+1/4, z+1/4'
+6 '-x+1/4, -y+1/4, -z+1/4'
+7 '-x, y, -z'
+8 'x, y, z'
+9 'x+1/4, y+3/4, -z+3/4'
+10 '-x+1/4, y+3/4, z+3/4'
+11 '-x, -y+1/2, z+1/2'
+12 'x, -y+1/2, -z+1/2'
+13 'x+1/4, -y+3/4, z+3/4'
+14 '-x+1/4, -y+3/4, -z+3/4'
+15 '-x, y+1/2, -z+1/2'
+16 'x, y+1/2, z+1/2'
+17 'x+3/4, y+1/4, -z+3/4'
+18 '-x+3/4, y+1/4, z+3/4'
+19 '-x+1/2, -y, z+1/2'
+20 'x+1/2, -y, -z+1/2'
+21 'x+3/4, -y+1/4, z+3/4'
+22 '-x+3/4, -y+1/4, -z+3/4'
+23 '-x+1/2, y, -z+1/2'
+24 'x+1/2, y, z+1/2'
+25 'x+3/4, y+3/4, -z+1/4'
+26 '-x+3/4, y+3/4, z+1/4'
+27 '-x+1/2, -y+1/2, z'
+28 'x+1/2, -y+1/2, -z'
+29 'x+3/4, -y+3/4, z+1/4'
+30 '-x+3/4, -y+3/4, -z+1/4'
+31 '-x+1/2, y+1/2, -z'
+32 'x+1/2, y+1/2, z'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+S0+ 0
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_occupancy
+S1 S0+ 32 h 0.71405(4) 0.65756(4) 0.37954(2) 0.04251(19) 1
+S2 S0+ 32 h 0.71589(5) 0.78009(3) 0.32626(2) 0.04510(19) 1
+S3 S0+ 32 h 0.79281(4) 0.72957(4) 0.25413(2) 0.04387(19) 1
+S4 S0+ 32 h 0.64431(5) 0.70252(3) 0.20151(2) 0.04348(18) 1
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_type_symbol
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+S1 S0+ 0.0315(3) 0.0643(3) 0.0317(3) 0.00190(16) -0.00640(14) 0.00348(18)
+S2 S0+ 0.0558(3) 0.0387(3) 0.0407(3) -0.00106(17) -0.00430(19) -0.00921(18)
+S3 S0+ 0.0425(3) 0.0500(3) 0.0391(3) -0.00987(17) 0.00493(17) 0.00173(18)
+S4 S0+ 0.0593(3) 0.0400(3) 0.0312(3) -0.00367(19) -0.00502(18) 0.00805(15)
+#End of TTdata_139983-ICSD

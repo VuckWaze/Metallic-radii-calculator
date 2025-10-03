@@ -1,0 +1,68 @@
+
+#(C) 2025 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
+data_105489-ICSD
+_database_code_ICSD 105489
+_audit_creation_date 2004-10-01
+_audit_update_record 2015-08-01
+_chemical_name_common Neptunium-alpha
+_chemical_formula_structural Np
+_chemical_formula_sum Np1
+_chemical_name_structure_type Î±âˆ’Np(alpha)
+_exptl_crystal_density_diffrn 20.47
+_citation_title
+
+;
+Crystal chemical studies of the 5f - series of elements. XVII. The crystal
+structure of neptunium metal
+;
+loop_
+_citation_id
+_citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Acta Crystallographica' 1952 5 660 664 ACCRA9
+loop_
+_citation_author_citation_id
+_citation_author_name
+primary 'Zachariasen, W.H.'
+_cell_length_a 6.663(3)
+_cell_length_b 4.723(1)
+_cell_length_c 4.887(2)
+_cell_angle_alpha 90.
+_cell_angle_beta 90.
+_cell_angle_gamma 90.
+_cell_volume 153.79
+_cell_formula_units_Z 8
+_space_group_name_H-M_alt 'P n m a'
+_space_group_IT_number 62
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 'x+1/2, y, -z+1/2'
+2 'x, -y+1/2, z'
+3 '-x+1/2, y+1/2, z+1/2'
+4 '-x, -y, -z'
+5 '-x+1/2, -y, z+1/2'
+6 '-x, y+1/2, -z'
+7 'x+1/2, -y+1/2, -z+1/2'
+8 'x, y, z'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+Np0+ 0
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+Np1 Np0+ 4 c 0.036 0.25 0.208 . 1.
+Np2 Np0+ 4 c 0.319 0.25 0.842 . 1.
+#End of TTdata_105489-ICSD

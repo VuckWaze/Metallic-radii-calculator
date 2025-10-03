@@ -1,0 +1,76 @@
+
+#(C) 2025 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
+data_64412-ICSD
+_database_code_ICSD 64412
+_audit_creation_date 2023-08-01
+_chemical_name_common Carbon
+_chemical_formula_structural C
+_chemical_formula_sum C1
+_chemical_name_structure_type C(P63mc)
+_exptl_crystal_density_diffrn 2.35
+_citation_title
+
+;
+Positron annihilation spectroscopy as a diagnostic tool for probing the
+first-cycle defect evolution in magnesium-sulfur battery electrodes
+;
+loop_
+_citation_id
+_citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary 'Physica Status Solidi A: Applications and Materials Science' 2023 220 1
+8 PSSABA
+loop_
+_citation_author_citation_id
+_citation_author_name
+primary 'Sheha, Eslam Mohamed'
+primary 'Farrag, Mohamed'
+primary 'Refai, Hanan Saber'
+primary 'El-Desoky, Mohamed Mahmoud'
+primary 'Abdel-Hady, Esam'
+_cell_length_a 2.4100(8)
+_cell_length_b 2.4100(8)
+_cell_length_c 6.7400(6)
+_cell_angle_alpha 90.
+_cell_angle_beta 90.
+_cell_angle_gamma 120.
+_cell_volume 33.9
+_cell_formula_units_Z 4
+_space_group_name_H-M_alt 'P 63 m c'
+_space_group_IT_number 186
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 '-x, -x+y, z+1/2'
+2 'x-y, -y, z+1/2'
+3 'y, x, z+1/2'
+4 'x-y, x, z+1/2'
+5 'y, -x+y, z+1/2'
+6 '-x, -y, z+1/2'
+7 'x, x-y, z'
+8 '-x+y, y, z'
+9 '-y, -x, z'
+10 '-x+y, -x, z'
+11 '-y, x-y, z'
+12 'x, y, z'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+C0+ 0
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+C1 C0+ 2 a 0 0 22.001 . 1.
+C2 C0+ 2 b 0.3333 0.6667 -8.9986 . 1.
+#End of TTdata_64412-ICSD
