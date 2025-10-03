@@ -53,11 +53,11 @@ class EnhancedCIFParser:
             r'_([a-z]+C[0-9]+)_',  # Space group notation
         ]
         
-        self.data['crystal_system'] = 'Unknown'
+        self.data['crystal system'] = 'Unknown'
         for pattern in crystal_patterns:
             match = re.search(pattern, self.data['filename'])
             if match:
-                self.data['crystal_system'] = match.group(1)
+                self.data['crystal system'] = match.group(1)
                 break
         
         # Extract lattice parameters
@@ -84,13 +84,13 @@ class EnhancedCIFParser:
         for pattern in space_group_patterns:
             match = re.search(pattern, content)
             if match:
-                self.data['space_group'] = match.group(1)
+                self.data['space group'] = match.group(1)
                 break
         else:
-            self.data['space_group'] = 'Unknown'
+            self.data['space group'] = 'Unknown'
         
         # Extract space group number
-        self.data['space_group_number'] = self._extract_parameter(content, r'_space_group_IT_number\s+(\d+)', int)
+        self.data['space group_number'] = self._extract_parameter(content, r'_space_group_IT_number\s+(\d+)', int)
         
         # Extract density
         self.data['density'] = self._extract_parameter(content, r'_exptl_crystal_density_diffrn\s+([\d.]+)')
@@ -113,7 +113,7 @@ class EnhancedCIFParser:
         """Extract atomic positions for distance calculations"""
         # Look for atomic position loop
         position_section = re.search(
-            r'loop_\s*\n(_atom_site_[^\n]*\n)*.*?(?=\n\s*(?:loop_|#|$))', 
+            r'loop \s*\n(_atom_site_[^\n]*\n)*.*?(?=\n\s*(?:loop_|#|$))', 
             content, re.DOTALL | re.MULTILINE
         )
         
@@ -126,7 +126,7 @@ class EnhancedCIFParser:
                 line = line.strip()
                 if line.startswith('_atom_site_'):
                     headers.append(line)
-                elif line and not line.startswith(('loop_', '#', '_')):
+                elif line and not line.startswith(('loop ', '#', '_')):
                     data_lines.append(line.split())
             
             # Parse atomic positions if we have the necessary columns
@@ -153,59 +153,59 @@ class EnhancedMetallicRadiiCalculator:
     # Extended coordination numbers and distance calculations
     STRUCTURE_INFO = {
         # Simple cubic structures
-        'fcc': {'coordination': 12, 'calc_method': 'fcc'},
-        'hcp': {'coordination': 12, 'calc_method': 'hcp'},
-        'bcc': {'coordination': 8, 'calc_method': 'bcc'},
+        'fcc': {'coordination': 12, 'calc method': 'fcc'},
+        'hcp': {'coordination': 12, 'calc method': 'hcp'},
+        'bcc': {'coordination': 8, 'calc method': 'bcc'},
         
         # Lanthanide structures
-        'α-La': {'coordination': 12, 'calc_method': 'alpha_la'},
+        'α-La': {'coordination': 12, 'calc method': 'alpha la'},
         
         # Diamond structures
-        'diamond': {'coordination': 4, 'calc_method': 'diamond'},
+        'diamond': {'coordination': 4, 'calc method': 'diamond'},
         
         # Complex metallic structures
-        'α-Mn': {'coordination': 8, 'calc_method': 'alpha_mn'},
-        'α-Np': {'coordination': 8, 'calc_method': 'orthorhombic'},
-        'α-Pa': {'coordination': 8, 'calc_method': 'tetragonal'},
-        'U': {'coordination': 8, 'calc_method': 'uranium'},
-        'α-Po': {'coordination': 6, 'calc_method': 'simple_cubic'},
-        'β-Po': {'coordination': 6, 'calc_method': 'simple_cubic'},
+        'α-Mn': {'coordination': 8, 'calc method': 'alpha mn'},
+        'α-Np': {'coordination': 8, 'calc method': 'orthorhombic'},
+        'α-Pa': {'coordination': 8, 'calc method': 'tetragonal'},
+        'U': {'coordination': 8, 'calc method': 'uranium'},
+        'α-Po': {'coordination': 6, 'calc method': 'simple cubic'},
+        'β-Po': {'coordination': 6, 'calc method': 'simple cubic'},
         
         # Tetragonal structures
-        'tI2': {'coordination': 8, 'calc_method': 'tetragonal_centered'},
-        'tP50': {'coordination': 6, 'calc_method': 'complex_tetragonal'},
+        'tI2': {'coordination': 8, 'calc method': 'tetragonal centered'},
+        'tP50': {'coordination': 6, 'calc method': 'complex tetragonal'},
         
         # Rhombohedral
-        'hR12': {'coordination': 6, 'calc_method': 'rhombohedral'},
-        'α-As': {'coordination': 3, 'calc_method': 'arsenic'},
+        'hR12': {'coordination': 6, 'calc method': 'rhombohedral'},
+        'α-As': {'coordination': 3, 'calc method': 'arsenic'},
         
         # Gallium structure
-        'α-Ga': {'coordination': 7, 'calc_method': 'gallium'},
+        'α-Ga': {'coordination': 7, 'calc method': 'gallium'},
         
         # Molecular crystals (special handling)
-        'Fddd': {'coordination': 2, 'calc_method': 'molecular'},  # S8
-        'Cmca': {'coordination': 2, 'calc_method': 'molecular'},  # I2
-        'cI4': {'coordination': 12, 'calc_method': 'molecular'},  # H2, D2
-        'γ-Se': {'coordination': 2, 'calc_method': 'selenium'},
+        'Fddd': {'coordination': 2, 'calc method': 'molecular'},  # S8
+        'Cmca': {'coordination': 2, 'calc method': 'molecular'},  # I2
+        'cI4': {'coordination': 12, 'calc method': 'molecular'},  # H2, D2
+        'γ-Se': {'coordination': 2, 'calc method': 'selenium'},
         
         # Complex boron structures
-        'β-B': {'coordination': 6, 'calc_method': 'beta_boron'},
+        'β-B': {'coordination': 6, 'calc method': 'beta boron'},
         
         # Tin structures
-        'β-Sn': {'coordination': 4, 'calc_method': 'beta_tin'},
+        'β-Sn': {'coordination': 4, 'calc method': 'beta tin'},
         
         # Phosphorus
-        'black': {'coordination': 3, 'calc_method': 'black_phosphorus'},
-        'red': {'coordination': 3, 'calc_method': 'red_phosphorus'},
-        'violet': {'coordination': 3, 'calc_method': 'violet_phosphorus'},
-        'Black P': {'coordination': 3, 'calc_method': 'black_phosphorus'},
+        'black': {'coordination': 3, 'calc method': 'black phosphorus'},
+        'red': {'coordination': 3, 'calc method': 'red phosphorus'},
+        'violet': {'coordination': 3, 'calc method': 'violet phosphorus'},
+        'Black P': {'coordination': 3, 'calc method': 'black phosphorus'},
         
         # Plutonium
-        'mP16': {'coordination': 8, 'calc_method': 'plutonium'},
+        'mP16': {'coordination': 8, 'calc method': 'plutonium'},
         
         # Graphite
-        'graphite': {'coordination': 3, 'calc_method': 'graphite'},
-        'P63mc': {'coordination': 4, 'calc_method': 'wurtzite'},
+        'graphite': {'coordination': 3, 'calc method': 'graphite'},
+        'P63mc': {'coordination': 4, 'calc method': 'wurtzite'},
     }
     
     def __init__(self):
@@ -217,7 +217,7 @@ class EnhancedMetallicRadiiCalculator:
         Calculate metallic radius with method information
         Returns (radius, method_used)
         """
-        crystal_system = cif_data['crystal_system']
+        crystal_system = cif_data['crystal system']
         a = cif_data['a']
         b = cif_data['b'] 
         c = cif_data['c']
@@ -229,8 +229,8 @@ class EnhancedMetallicRadiiCalculator:
             return None, 'No lattice parameter'
         
         # Get structure info
-        structure_info = self.STRUCTURE_INFO.get(crystal_system, {'calc_method': 'unknown'})
-        calc_method = structure_info['calc_method']
+        structure_info = self.STRUCTURE_INFO.get(crystal_system, {'calc method': 'unknown'})
+        calc_method = structure_info['calc method']
         
         try:
             radius = self._calculate_radius_by_method(calc_method, a, b, c, alpha, beta, gamma, cif_data)
@@ -256,13 +256,13 @@ class EnhancedMetallicRadiiCalculator:
         elif method == 'bcc':
             return a * np.sqrt(3) / 4
         
-        elif method == 'alpha_la':
+        elif method == 'alpha la':
             return a / 2
         
         elif method == 'diamond':
             return a * np.sqrt(3) / 8
         
-        elif method == 'alpha_mn':
+        elif method == 'alpha mn':
             # α-Mn has complex cubic structure, use average coordination approach
             return a * 0.12  # Empirical factor for α-Mn
         
@@ -287,10 +287,10 @@ class EnhancedMetallicRadiiCalculator:
                 return min_param / 2
             return a / 2
         
-        elif method == 'simple_cubic':
+        elif method == 'simple cubic':
             return a / 2
         
-        elif method == 'tetragonal_centered':
+        elif method == 'tetragonal centered':
             # Body-centered tetragonal (like In)
             if c:
                 return np.sqrt(a*a + c*c) / 4
@@ -314,26 +314,26 @@ class EnhancedMetallicRadiiCalculator:
             # Selenium chains
             return a * 0.3
         
-        elif method == 'beta_boron':
+        elif method == 'beta boron':
             # Complex boron structure
             return a * 0.15
         
-        elif method == 'beta_tin':
+        elif method == 'beta tin':
             # β-Sn (white tin)
             if c:
                 return min(a, c) * 0.35
             return a * 0.35
         
-        elif method == 'black_phosphorus':
+        elif method == 'black phosphorus':
             # Layered structure
             if b and c:
                 return min(a, b) * 0.25  # Use in-layer distance
             return a * 0.25
         
-        elif method == 'red_phosphorus':
+        elif method == 'red phosphorus':
             return a * 0.2  # Amorphous-like
         
-        elif method == 'violet_phosphorus':
+        elif method == 'violet phosphorus':
             return a * 0.2
         
         elif method == 'plutonium':
@@ -352,7 +352,7 @@ class EnhancedMetallicRadiiCalculator:
         elif method == 'rhombohedral':
             return a * 0.3
         
-        elif method == 'complex_tetragonal':
+        elif method == 'complex tetragonal':
             return a * 0.2
         
         else:
@@ -367,14 +367,14 @@ class EnhancedMetallicRadiiCalculator:
         atomic_volume = self.calculate_atomic_volume(parser.data)
         
         # Get coordination number
-        structure_info = self.STRUCTURE_INFO.get(parser.data['crystal_system'], {})
+        structure_info = self.STRUCTURE_INFO.get(parser.data['crystal system'], {})
         coordination = structure_info.get('coordination', 'Unknown')
         
         result = {
             'Element': parser.data['element'],
-            'Crystal_System': parser.data['crystal_system'],
-            'Space_Group': parser.data['space_group'],
-            'Space_Group_Number': parser.data.get('space_group_number'),
+            'Crystal System': parser.data['crystal system'],
+            'Space Group': parser.data['space group'],
+            'Space Group_Number': parser.data.get('space group_number'),
             'a (Å)': parser.data['a'],
             'b (Å)': parser.data['b'],
             'c (Å)': parser.data['c'],
@@ -384,10 +384,10 @@ class EnhancedMetallicRadiiCalculator:
             'Volume (Å³)': parser.data['volume'],
             'Z': parser.data['z'],
             'Density (g/cm³)': parser.data['density'],
-            'Metallic_Radius (Å)': metallic_radius,
-            'Atomic_Volume (Å³)': atomic_volume,
-            'Coordination_Number': coordination,
-            'Calculation_Method': method,
+            'Metallic Radius (Å)': metallic_radius,
+            'Atomic Volume (Å³)': atomic_volume,
+            'Coordination Number': coordination,
+            'Calculation Method': method,
             'Filename': parser.data['filename']
         }
         
@@ -484,14 +484,14 @@ class PeriodicTableAnalyzer:
             'Noble Gases': ['He', 'Ne', 'Ar', 'Kr', 'Xe', 'Rn']
         }
         
-        return {'atomic_numbers': atomic_numbers, 'categories': categories}
+        return {'atomic numbers': atomic_numbers, 'categories': categories}
     
     def create_comprehensive_summary(self) -> pd.DataFrame:
         """Create comprehensive summary with periodic information"""
         df_enhanced = self.df.copy()
         
         # Add atomic numbers
-        df_enhanced['Atomic_Number'] = df_enhanced['Element'].map(self.periodic_data['atomic_numbers'])
+        df_enhanced['Atomic Number'] = df_enhanced['Element'].map(self.periodic_data['atomic numbers'])
         
         # Add element categories
         element_to_category = {}
@@ -499,29 +499,29 @@ class PeriodicTableAnalyzer:
             for element in elements:
                 element_to_category[element] = category
         
-        df_enhanced['Element_Category'] = df_enhanced['Element'].map(element_to_category).fillna('Other')
+        df_enhanced['Element Category'] = df_enhanced['Element'].map(element_to_category).fillna('Other')
         
         # Sort by atomic number
-        df_enhanced = df_enhanced.sort_values('Atomic_Number')
+        df_enhanced = df_enhanced.sort_values('Atomic Number')
         
         return df_enhanced
     
     def plot_periodic_trends(self):
         """Plot metallic radii trends across periodic table"""
         df_enhanced = self.create_comprehensive_summary()
-        df_enhanced = df_enhanced.dropna(subset=['Metallic_Radius (Å)', 'Atomic_Number'])
+        df_enhanced = df_enhanced.dropna(subset=['Metallic Radius (Å)', 'Atomic Number'])
         
         fig, axes = plt.subplots(2, 2, figsize=(20, 16))
         
         # 1. Atomic number vs metallic radius
-        categories = df_enhanced['Element_Category'].unique()
+        categories = df_enhanced['Element Category'].unique()
         colors = sns.color_palette("Set1", len(categories))
         color_map = dict(zip(categories, colors))
         
         for category in categories:
-            cat_data = df_enhanced[df_enhanced['Element_Category'] == category]
+            cat_data = df_enhanced[df_enhanced['Element Category'] == category]
             if not cat_data.empty:
-                axes[0,0].scatter(cat_data['Atomic_Number'], cat_data['Metallic_Radius (Å)'],
+                axes[0,0].scatter(cat_data['Atomic Number'], cat_data['Metallic Radius (Å)'],
                                label=category, alpha=0.7, s=60, color=color_map[category])
         
         axes[0,0].set_xlabel('Atomic Number', fontweight='bold')
@@ -531,7 +531,7 @@ class PeriodicTableAnalyzer:
         axes[0,0].grid(True, alpha=0.3)
         
         # 2. Crystal system distribution
-        crystal_counts = df_enhanced['Crystal_System'].value_counts().head(10)
+        crystal_counts = df_enhanced['Crystal System'].value_counts().head(10)
         axes[0,1].bar(range(len(crystal_counts)), crystal_counts.values,
                      color=sns.color_palette("viridis", len(crystal_counts)))
         axes[0,1].set_xticks(range(len(crystal_counts)))
@@ -540,8 +540,8 @@ class PeriodicTableAnalyzer:
         axes[0,1].set_title('Crystal System Distribution', fontweight='bold', fontsize=14)
         
         # 3. Density vs radius
-        axes[1,0].scatter(df_enhanced['Metallic_Radius (Å)'], df_enhanced['Density (g/cm³)'],
-                         c=df_enhanced['Atomic_Number'], cmap='viridis', alpha=0.7, s=60)
+        axes[1,0].scatter(df_enhanced['Metallic Radius (Å)'], df_enhanced['Density (g/cm³)'],
+                         c=df_enhanced['Atomic Number'], cmap='viridis', alpha=0.7, s=60)
         axes[1,0].set_xlabel('Metallic Radius (Å)', fontweight='bold')
         axes[1,0].set_ylabel('Density (g/cm³)', fontweight='bold')
         axes[1,0].set_title('Density vs Metallic Radius', fontweight='bold', fontsize=14)
@@ -550,13 +550,13 @@ class PeriodicTableAnalyzer:
         axes[1,0].grid(True, alpha=0.3)
         
         # 4. Coordination number analysis
-        coord_data = df_enhanced.dropna(subset=['Coordination_Number'])
-        coord_data = coord_data[coord_data['Coordination_Number'] != 'Unknown']
-        coord_data['Coordination_Number'] = pd.to_numeric(coord_data['Coordination_Number'], errors='coerce')
-        coord_data = coord_data.dropna(subset=['Coordination_Number'])
+        coord_data = df_enhanced.dropna(subset=['Coordination Number'])
+        coord_data = coord_data[coord_data['Coordination Number'] != 'Unknown']
+        coord_data['Coordination Number'] = pd.to_numeric(coord_data['Coordination Number'], errors='coerce')
+        coord_data = coord_data.dropna(subset=['Coordination Number'])
         
         if not coord_data.empty:
-            coord_counts = coord_data['Coordination_Number'].value_counts().sort_index()
+            coord_counts = coord_data['Coordination Number'].value_counts().sort_index()
             axes[1,1].bar(coord_counts.index, coord_counts.values,
                          color=sns.color_palette("plasma", len(coord_counts)))
             axes[1,1].set_xlabel('Coordination Number', fontweight='bold')
@@ -578,38 +578,84 @@ class PeriodicTableAnalyzer:
         axes = axes.flatten()
         
         for i, family in enumerate(families_to_plot):
-            family_data = df_enhanced[df_enhanced['Element_Category'] == family]
-            family_data = family_data.dropna(subset=['Metallic_Radius (Å)'])
-            family_data = family_data.sort_values('Atomic_Number')
+            family_data = df_enhanced[df_enhanced['Element Category'] == family]
+            family_data = family_data.dropna(subset=['Metallic Radius (Å)'])
+            family_data = family_data.sort_values('Atomic Number')
             
             if not family_data.empty:
-                axes[i].plot(family_data['Atomic_Number'], family_data['Metallic_Radius (Å)'],
-                           'o-', linewidth=2, markersize=8, alpha=0.8)
+                if family == 'Transition Metals':
+                    # Define transition metal series
+                    tm_3d = ['Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn']
+                    tm_4d = ['Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd']
+                    tm_5d = ['Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg']
+                    
+                    series_colors = ["#9ed0ff", "#8ace8a", "#e795bb"]
+                    text_colors   = ["#478dce", "#388a38", "#ce4e8a"]
+                    series_names  = ['3d series', '4d series', '5d series']
+                    
+                    for series, color, text_color, name in zip([tm_3d, tm_4d, tm_5d], series_colors, text_colors, series_names):
+                        series_data = family_data[family_data['Element'].isin(series)]
+                        if not series_data.empty:
+                            # Calculate d-electrons based on position in series
+                            d_electrons = []
+                            for _, row in series_data.iterrows():
+                                try:
+                                    d_elec = series.index(row['Element']) + 1
+                                    d_electrons.append(d_elec)
+                                except ValueError:
+                                    continue
+
+                            if d_electrons:
+                                axes[i].plot(d_electrons, series_data['Metallic Radius (Å)'].iloc[:len(d_electrons)],
+                                           'o-', linewidth=2, markersize=8, alpha=0.8, color=color, label=name)
+                                
+                                # Add element labels
+                                for j, (_, row) in enumerate(series_data.iterrows()):
+                                    if j < len(d_electrons):
+                                        offset = (-10, 0) if series == tm_3d else (0, 10) if series == tm_4d else (10, 0)  # Adjust offset based on series
+                                        axes[i].annotate(row['Element'], 
+                                                   (d_electrons[j], row['Metallic Radius (Å)']),
+                                                   xytext=offset, textcoords='offset points',
+                                                   ha='center', fontsize=9, color=text_color)
+
+                    
+                    axes[i].set_xlabel('Number of d Electrons', fontweight='bold')
+                    axes[i].legend()
+                    axes[i].set_xticks(np.arange(1, 11, 1))
+                    axes[i].set_yticks(np.arange(1.0, 2.4, 0.1))
+                else:
+                    axes[i].plot(family_data['Atomic Number'], family_data['Metallic Radius (Å)'],
+                               'o-', linewidth=2, markersize=8, alpha=0.8)
+                    
+                    # Add element labels
+                    for _, row in family_data.iterrows():
+                        axes[i].annotate(row['Element'], 
+                                       (row['Atomic Number'], row['Metallic Radius (Å)']),
+                                       xytext=(0, 10), textcoords='offset points',
+                                       ha='center', fontsize=10)
+                    
+                    axes[i].set_xlabel('Atomic Number', fontweight='bold')
                 
-                # Add element labels
-                for _, row in family_data.iterrows():
-                    axes[i].annotate(row['Element'], 
-                                   (row['Atomic_Number'], row['Metallic_Radius (Å)']),
-                                   xytext=(0, 10), textcoords='offset points',
-                                   ha='center', fontsize=10)
-                
-                axes[i].set_xlabel('Atomic Number', fontweight='bold')
                 axes[i].set_ylabel('Metallic Radius (Å)', fontweight='bold')
                 axes[i].set_title(f'{family}', fontweight='bold')
                 axes[i].grid(True, alpha=0.3)
         
+        # Remove empty subplot
+        # if len(families_to_plot) < len(axes):
+        #     fig.delaxes(axes[-1])
+              
         # Crystal structure complexity analysis
         df_complexity = df_enhanced.copy()
-        df_complexity['Structure_Complexity'] = df_complexity['Crystal_System'].map({
+        df_complexity['Structure Complexity'] = df_complexity['Crystal System'].map({
             'fcc': 1, 'hcp': 1, 'bcc': 1,
             'diamond': 2, 'α-La': 2,
             'α-Mn': 4, 'α-Np': 3, 'U': 3, 'α-Pa': 3,
             'α-Ga': 3, 'mP16': 4, 'tI2': 2
         }).fillna(3)  # Default complexity
         
-        axes[5].scatter(df_complexity['Atomic_Number'], df_complexity['Structure_Complexity'],
-                       c=df_complexity['Metallic_Radius (Å)'], cmap='coolwarm', 
-                       s=80, alpha=0.7, edgecolors='black')
+        axes[5].scatter(df_complexity['Atomic Number'], df_complexity['Structure Complexity'],
+                       c=df_complexity['Metallic Radius (Å)'], cmap='spring', 
+                       s=40, alpha=0.7, edgecolors='black')
         axes[5].set_xlabel('Atomic Number', fontweight='bold')
         axes[5].set_ylabel('Structure Complexity', fontweight='bold')
         axes[5].set_title('Crystal Structure Complexity', fontweight='bold')
@@ -622,23 +668,28 @@ class PeriodicTableAnalyzer:
     
     def create_calculation_method_analysis(self):
         """Analyze calculation methods used"""
-        method_counts = self.df['Calculation_Method'].value_counts()
+        method_counts = self.df['Calculation Method'].value_counts()
         
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
         
         # Method distribution
-        ax1.pie(method_counts.values, labels=method_counts.index, autopct='%1.1f%%',
-               colors=sns.color_palette("Set3", len(method_counts)))
+        ax1.pie(method_counts.values, 
+                labels=[s.title() if len(s) > 3 else s.upper() for s in method_counts.index], 
+                autopct='%1.1f%%',
+                colors=sns.color_palette("Set3", len(method_counts)),
+                textprops={'fontsize': 8},
+                startangle=140,)
         ax1.set_title('Distribution of Calculation Methods', fontweight='bold', fontsize=14)
         
         # Accuracy by method (if we had reference data)
-        method_accuracy = self.df.groupby('Calculation_Method')['Metallic_Radius (Å)'].agg(['mean', 'std', 'count'])
+        method_accuracy = self.df.groupby('Calculation Method')['Metallic Radius (Å)'].agg(['mean', 'std', 'count'])
         method_accuracy = method_accuracy.sort_values('count', ascending=True)
         
-        ax2.barh(range(len(method_accuracy)), method_accuracy['count'],
-                color=sns.color_palette("viridis", len(method_accuracy)))
+        ax2.barh(range(len(method_accuracy)), 
+                 method_accuracy['count'],
+                 color=sns.color_palette("viridis", len(method_accuracy)))
         ax2.set_yticks(range(len(method_accuracy)))
-        ax2.set_yticklabels(method_accuracy.index)
+        ax2.set_yticklabels([s.title() if len(s) > 3 else s.upper() for s in method_accuracy.index])
         ax2.set_xlabel('Number of Elements', fontweight='bold')
         ax2.set_title('Elements per Calculation Method', fontweight='bold', fontsize=14)
         ax2.grid(True, alpha=0.3, axis='x')
@@ -651,7 +702,7 @@ def main():
     
     script_dir = Path(__file__).parent
     elements_dir = script_dir / 'Elements'
-    output_dir = script_dir / 'output_full_periodic'
+    output_dir = script_dir / 'output full_periodic'
     output_dir.mkdir(exist_ok=True)
     
     print("🌟 ENHANCED Metallic Radii Calculator - Full Periodic Table Edition!")
@@ -677,7 +728,7 @@ def main():
     
     print(f"\n✅ Successfully processed {len(df)} structures!")
     print(f"📊 Unique elements: {df['Element'].nunique()}")
-    print(f"🔬 Unique crystal systems: {df['Crystal_System'].nunique()}")
+    print(f"🔬 Unique crystal systems: {df['Crystal System'].nunique()}")
     
     # Print problematic structures
     calculator.print_problematic_structures()
@@ -689,12 +740,12 @@ def main():
     summary_df = analyzer.create_comprehensive_summary()
     
     print(f"\n📋 Element Categories Represented:")
-    category_counts = summary_df['Element_Category'].value_counts()
+    category_counts = summary_df['Element Category'].value_counts()
     for category, count in category_counts.items():
         print(f"   • {category}: {count} elements")
     
     # Save comprehensive results
-    csv_path = output_dir / 'complete_periodic_table_radii.csv'
+    csv_path = output_dir / 'complete periodic_table_radii.csv'
     summary_df.to_csv(csv_path, index=False, float_format='%.6f')
     print(f"\n💾 Complete results saved to: {csv_path}")
     
@@ -703,38 +754,38 @@ def main():
     
     # Plot 1: Periodic trends
     fig1 = analyzer.plot_periodic_trends()
-    fig1.savefig(output_dir / 'periodic_table_trends.png', dpi=300, bbox_inches='tight')
+    fig1.savefig(output_dir / 'periodic table_trends.png', dpi=300, bbox_inches='tight')
     print(f"   🎨 Periodic trends plot saved")
     
     # Plot 2: Element families
     fig2 = analyzer.plot_element_families()
-    fig2.savefig(output_dir / 'element_families_analysis.png', dpi=300, bbox_inches='tight')
+    fig2.savefig(output_dir / 'element families_analysis.png', dpi=300, bbox_inches='tight')
     print(f"   🎨 Element families plot saved")
     
     # Plot 3: Calculation methods
     fig3 = analyzer.create_calculation_method_analysis()
-    fig3.savefig(output_dir / 'calculation_methods_analysis.png', dpi=300, bbox_inches='tight')
+    fig3.savefig(output_dir / 'calculation methods_analysis.png', dpi=300, bbox_inches='tight')
     print(f"   🎨 Calculation methods plot saved")
     
     # Statistical summary
-    valid_radii = summary_df.dropna(subset=['Metallic_Radius (Å)'])
+    valid_radii = summary_df.dropna(subset=['Metallic Radius (Å)'])
     
     print(f"\n📊 COMPREHENSIVE STATISTICS:")
     print(f"   • Total structures analyzed: {len(df)}")
     print(f"   • Elements with valid radii: {len(valid_radii)}")
-    print(f"   • Average metallic radius: {valid_radii['Metallic_Radius (Å)'].mean():.3f} Å")
-    print(f"   • Largest radius: {valid_radii['Metallic_Radius (Å)'].max():.3f} Å ({valid_radii.loc[valid_radii['Metallic_Radius (Å)'].idxmax(), 'Element']})")
-    print(f"   • Smallest radius: {valid_radii['Metallic_Radius (Å)'].min():.3f} Å ({valid_radii.loc[valid_radii['Metallic_Radius (Å)'].idxmin(), 'Element']})")
-    print(f"   • Radius range: {valid_radii['Metallic_Radius (Å)'].max() - valid_radii['Metallic_Radius (Å)'].min():.3f} Å")
+    print(f"   • Average metallic radius: {valid_radii['Metallic Radius (Å)'].mean():.3f} Å")
+    print(f"   • Largest radius: {valid_radii['Metallic Radius (Å)'].max():.3f} Å ({valid_radii.loc[valid_radii['Metallic Radius (Å)'].idxmax(), 'Element']})")
+    print(f"   • Smallest radius: {valid_radii['Metallic Radius (Å)'].min():.3f} Å ({valid_radii.loc[valid_radii['Metallic Radius (Å)'].idxmin(), 'Element']})")
+    print(f"   • Radius range: {valid_radii['Metallic Radius (Å)'].max() - valid_radii['Metallic Radius (Å)'].min():.3f} Å")
     
     print(f"\n🔬 Crystal Structure Diversity:")
-    for crystal, count in df['Crystal_System'].value_counts().head(10).items():
+    for crystal, count in df['Crystal System'].value_counts().head(10).items():
         print(f"   • {crystal}: {count} structures")
     
     print(f"\n🏆 Most Complex Structures Successfully Analyzed:")
     complex_structures = ['α-Mn', 'U', 'α-Np', 'mP16', 'α-Ga']
     for structure in complex_structures:
-        elements = df[df['Crystal_System'] == structure]['Element'].tolist()
+        elements = df[df['Crystal System'] == structure]['Element'].tolist()
         if elements:
             print(f"   • {structure}: {', '.join(elements)}")
     

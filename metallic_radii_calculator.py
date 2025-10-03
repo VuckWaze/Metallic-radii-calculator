@@ -37,7 +37,7 @@ class CIFParser:
         
         # Extract crystal system from filename
         crystal_match = re.search(r'_\(([^)]+)\)_', self.data['filename'])
-        self.data['crystal_system'] = crystal_match.group(1) if crystal_match else 'Unknown'
+        self.data['crystal system'] = crystal_match.group(1) if crystal_match else 'Unknown'
         
         # Extract lattice parameters
         self.data['a'] = self._extract_parameter(content, r'_cell_length_a\s+([\d.]+)')
@@ -55,7 +55,7 @@ class CIFParser:
         
         # Extract space group
         space_group_match = re.search(r"_space_group_name_H-M_alt\s+'([^']+)'", content)
-        self.data['space_group'] = space_group_match.group(1) if space_group_match else 'Unknown'
+        self.data['space group'] = space_group_match.group(1) if space_group_match else 'Unknown'
         
         # Extract density
         self.data['density'] = self._extract_parameter(content, r'_exptl_crystal_density_diffrn\s+([\d.]+)')
@@ -90,7 +90,7 @@ class MetallicRadiiCalculator:
         
         The metallic radius is calculated as half the nearest-neighbor distance
         """
-        crystal_system = cif_data['crystal_system']
+        crystal_system = cif_data['crystal system']
         a = cif_data['a']
         b = cif_data['b'] 
         c = cif_data['c']
@@ -138,17 +138,17 @@ class MetallicRadiiCalculator:
         
         result = {
             'Element': parser.data['element'],
-            'Crystal_System': parser.data['crystal_system'],
-            'Space_Group': parser.data['space_group'],
+            'Crystal System': parser.data['crystal system'],
+            'Space Group': parser.data['space group'],
             'a (Å)': parser.data['a'],
             'b (Å)': parser.data['b'],
             'c (Å)': parser.data['c'],
             'Volume (Å³)': parser.data['volume'],
             'Z': parser.data['z'],
             'Density (g/cm³)': parser.data['density'],
-            'Metallic_Radius (Å)': metallic_radius,
-            'Atomic_Volume (Å³)': atomic_volume,
-            'Coordination_Number': self.COORDINATION_NUMBERS.get(parser.data['crystal_system'], 'Unknown'),
+            'Metallic Radius (Å)': metallic_radius,
+            'Atomic Volume (Å³)': atomic_volume,
+            'Coordination Number': self.COORDINATION_NUMBERS.get(parser.data['crystal system'], 'Unknown'),
             'Filename': parser.data['filename']
         }
         
@@ -162,7 +162,7 @@ class MetallicRadiiCalculator:
             try:
                 result = self.process_cif_file(str(cif_file))
                 self.results.append(result)
-                print(f"Processed: {result['Element']} ({result['Crystal_System']})")
+                print(f"Processed: {result['Element']} ({result['Crystal System']})")
             except Exception as e:
                 print(f"Error processing {cif_file}: {e}")
     
@@ -187,12 +187,12 @@ class MetallicRadiiAnalyzer:
     def create_summary_table(self) -> pd.DataFrame:
         """Create a summary table with key properties"""
         summary_cols = [
-            'Element', 'Crystal_System', 'Metallic_Radius (Å)', 
-            'Atomic_Volume (Å³)', 'Coordination_Number', 'a (Å)', 'Density (g/cm³)'
+            'Element', 'Crystal System', 'Metallic Radius (Å)', 
+            'Atomic Volume (Å³)', 'Coordination Number', 'a (Å)', 'Density (g/cm³)'
         ]
         
         summary_df = self.df[summary_cols].copy()
-        summary_df = summary_df.sort_values('Metallic_Radius (Å)', ascending=False)
+        summary_df = summary_df.sort_values('Metallic Radius (Å)', ascending=False)
         
         return summary_df
     
@@ -201,16 +201,16 @@ class MetallicRadiiAnalyzer:
         fig, ax = plt.subplots(figsize=(14, 8))
         
         # Sort by metallic radius
-        df_sorted = self.df.sort_values('Metallic_Radius (Å)', ascending=True)
+        df_sorted = self.df.sort_values('Metallic Radius (Å)', ascending=True)
         
         # Create color map based on crystal system
-        crystal_systems = df_sorted['Crystal_System'].unique()
+        crystal_systems = df_sorted['Crystal System'].unique()
         colors = sns.color_palette("Set2", len(crystal_systems))
         color_map = dict(zip(crystal_systems, colors))
         
-        bar_colors = [color_map[cs] for cs in df_sorted['Crystal_System']]
+        bar_colors = [color_map[cs] for cs in df_sorted['Crystal System']]
         
-        bars = ax.bar(df_sorted['Element'], df_sorted['Metallic_Radius (Å)'], 
+        bars = ax.bar(df_sorted['Element'], df_sorted['Metallic Radius (Å)'], 
                      color=bar_colors, alpha=0.8, edgecolor='black', linewidth=0.5)
         
         ax.set_xlabel('Element', fontsize=14, fontweight='bold')
@@ -218,7 +218,7 @@ class MetallicRadiiAnalyzer:
         ax.set_title('Metallic Radii of Rare Earth Elements', fontsize=16, fontweight='bold')
         
         # Add value labels on bars
-        for bar, value in zip(bars, df_sorted['Metallic_Radius (Å)']):
+        for bar, value in zip(bars, df_sorted['Metallic Radius (Å)']):
             if value:
                 ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.005,
                        f'{value:.3f}', ha='center', va='bottom', fontsize=10)
@@ -240,19 +240,19 @@ class MetallicRadiiAnalyzer:
         """Plot metallic radius vs atomic volume"""
         fig, ax = plt.subplots(figsize=(12, 8))
         
-        crystal_systems = self.df['Crystal_System'].unique()
+        crystal_systems = self.df['Crystal System'].unique()
         colors = sns.color_palette("Set1", len(crystal_systems))
         
         for i, cs in enumerate(crystal_systems):
-            cs_data = self.df[self.df['Crystal_System'] == cs]
-            ax.scatter(cs_data['Atomic_Volume (Å³)'], cs_data['Metallic_Radius (Å)'],
+            cs_data = self.df[self.df['Crystal System'] == cs]
+            ax.scatter(cs_data['Atomic Volume (Å³)'], cs_data['Metallic Radius (Å)'],
                       c=[colors[i]], label=cs, s=100, alpha=0.7, edgecolors='black')
             
             # Add element labels
             for _, row in cs_data.iterrows():
-                if pd.notna(row['Metallic_Radius (Å)']):
+                if pd.notna(row['Metallic Radius (Å)']):
                     ax.annotate(row['Element'], 
-                              (row['Atomic_Volume (Å³)'], row['Metallic_Radius (Å)']),
+                              (row['Atomic Volume (Å³)'], row['Metallic Radius (Å)']),
                               xytext=(5, 5), textcoords='offset points', fontsize=10)
         
         ax.set_xlabel('Atomic Volume (Å³)', fontsize=14, fontweight='bold')
@@ -269,7 +269,7 @@ class MetallicRadiiAnalyzer:
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
         # Count plot
-        crystal_counts = self.df['Crystal_System'].value_counts()
+        crystal_counts = self.df['Crystal System'].value_counts()
         ax1.bar(crystal_counts.index, crystal_counts.values, 
                color=sns.color_palette("Set2", len(crystal_counts)))
         ax1.set_xlabel('Crystal System', fontsize=12, fontweight='bold')
@@ -306,7 +306,7 @@ class MetallicRadiiAnalyzer:
         axes[0,1].tick_params(axis='x', rotation=45)
         
         # c/a ratio for hexagonal systems
-        hex_data = self.df[self.df['Crystal_System'].isin(['hcp', 'α-La'])].copy()
+        hex_data = self.df[self.df['Crystal System'].isin(['hcp', 'α-La'])].copy()
         hex_data['c/a_ratio'] = hex_data['c (Å)'] / hex_data['a (Å)']
         hex_data = hex_data.sort_values('c/a_ratio', ascending=True)
         
@@ -321,12 +321,12 @@ class MetallicRadiiAnalyzer:
             axes[1,0].legend()
         
         # Density vs Metallic Radius
-        crystal_systems = self.df['Crystal_System'].unique()
+        crystal_systems = self.df['Crystal System'].unique()
         colors = sns.color_palette("Set1", len(crystal_systems))
         
         for i, cs in enumerate(crystal_systems):
-            cs_data = self.df[self.df['Crystal_System'] == cs]
-            axes[1,1].scatter(cs_data['Metallic_Radius (Å)'], cs_data['Density (g/cm³)'],
+            cs_data = self.df[self.df['Crystal System'] == cs]
+            axes[1,1].scatter(cs_data['Metallic Radius (Å)'], cs_data['Density (g/cm³)'],
                             c=[colors[i]], label=cs, s=80, alpha=0.7, edgecolors='black')
         
         axes[1,1].set_xlabel('Metallic Radius (Å)', fontweight='bold')
@@ -375,12 +375,12 @@ def main():
     print(summary_df.to_string(index=False, float_format='%.3f'))
     
     # Save detailed results to CSV
-    csv_path = output_dir / 'metallic_radii_results.csv'
+    csv_path = output_dir / 'metallic radii_results.csv'
     df.to_csv(csv_path, index=False, float_format='%.6f')
     print(f"\n💾 Detailed results saved to: {csv_path}")
     
     # Save summary table
-    summary_path = output_dir / 'metallic_radii_summary.csv'
+    summary_path = output_dir / 'metallic radii_summary.csv'
     summary_df.to_csv(summary_path, index=False, float_format='%.3f')
     print(f"💾 Summary table saved to: {summary_path}")
     
@@ -389,34 +389,34 @@ def main():
     
     # Plot 1: Metallic radii by element
     fig1 = analyzer.plot_metallic_radii_by_element()
-    fig1.savefig(output_dir / 'metallic_radii_by_element.png', dpi=300, bbox_inches='tight')
+    fig1.savefig(output_dir / 'metallic radii_by_element.png', dpi=300, bbox_inches='tight')
     print(f"   📊 Metallic radii plot saved")
     
     # Plot 2: Radius vs atomic volume
     fig2 = analyzer.plot_radius_vs_atomic_volume()
-    fig2.savefig(output_dir / 'radius_vs_atomic_volume.png', dpi=300, bbox_inches='tight')
+    fig2.savefig(output_dir / 'radius vs_atomic_volume.png', dpi=300, bbox_inches='tight')
     print(f"   📊 Radius vs volume plot saved")
     
     # Plot 3: Crystal system distribution
     fig3 = analyzer.plot_crystal_system_distribution()
-    fig3.savefig(output_dir / 'crystal_system_distribution.png', dpi=300, bbox_inches='tight')
+    fig3.savefig(output_dir / 'crystal system_distribution.png', dpi=300, bbox_inches='tight')
     print(f"   📊 Crystal system distribution plot saved")
     
     # Plot 4: Lattice parameters
     fig4 = analyzer.plot_lattice_parameters()
-    fig4.savefig(output_dir / 'lattice_parameters_analysis.png', dpi=300, bbox_inches='tight')
+    fig4.savefig(output_dir / 'lattice parameters_analysis.png', dpi=300, bbox_inches='tight')
     print(f"   📊 Lattice parameters plot saved")
     
     # Display key statistics
     print("\n📈 Key Statistics:")
-    print(f"   • Average metallic radius: {df['Metallic_Radius (Å)'].mean():.3f} Å")
-    print(f"   • Largest metallic radius: {df['Metallic_Radius (Å)'].max():.3f} Å ({df.loc[df['Metallic_Radius (Å)'].idxmax(), 'Element']})")
-    print(f"   • Smallest metallic radius: {df['Metallic_Radius (Å)'].min():.3f} Å ({df.loc[df['Metallic_Radius (Å)'].idxmin(), 'Element']})")
-    print(f"   • Range: {df['Metallic_Radius (Å)'].max() - df['Metallic_Radius (Å)'].min():.3f} Å")
+    print(f"   • Average metallic radius: {df['Metallic Radius (Å)'].mean():.3f} Å")
+    print(f"   • Largest metallic radius: {df['Metallic Radius (Å)'].max():.3f} Å ({df.loc[df['Metallic Radius (Å)'].idxmax(), 'Element']})")
+    print(f"   • Smallest metallic radius: {df['Metallic Radius (Å)'].min():.3f} Å ({df.loc[df['Metallic Radius (Å)'].idxmin(), 'Element']})")
+    print(f"   • Range: {df['Metallic Radius (Å)'].max() - df['Metallic Radius (Å)'].min():.3f} Å")
     
     # Crystal system statistics
     print(f"\n🔬 Crystal System Distribution:")
-    for cs, count in df['Crystal_System'].value_counts().items():
+    for cs, count in df['Crystal System'].value_counts().items():
         print(f"   • {cs}: {count} elements")
     
     plt.show()
