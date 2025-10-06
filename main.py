@@ -46,6 +46,7 @@ from utils import (
     ValidationError
 )
 from calculations import VolumeBasedCalculator, RadiusCalculatorFactory
+from visualizations import PeriodicTableVisualizer
 
 class CIFParser:
     """
@@ -497,6 +498,37 @@ def main():
         
         print(f"\n🏆 ANALYSIS COMPLETE!")
         print(f"   Results saved to: {output_file}")
+        
+        # Generate beautiful visualizations
+        try:
+            print(f"\n🎨 Generating comprehensive visualizations...")
+            
+            # Create DataFrame for visualizations
+            results_df = pd.DataFrame(processor.results)
+            results_df = results_df.sort_values('Element')
+            
+            # Only proceed if we have data
+            if not results_df.empty:
+                visualizer = PeriodicTableVisualizer(results_df)
+                
+                # Create plots directory
+                plots_dir = f"{output_dir}/plots"
+                create_directory_if_not_exists(plots_dir)
+                
+                # Generate all visualization types
+                visualizer.generate_all_visualizations(plots_dir)
+                
+                # Show interactive plots
+                print(f"   Opening interactive plots... (Close plot windows to continue)")
+                visualizer.show_all_plots()
+                
+                print(f"   📈 Visualization complete! Plots saved to: {plots_dir}")
+            else:
+                print(f"   ⚠️  No data available for visualization")
+            
+        except Exception as plot_error:
+            print(f"⚠️  Visualization error (continuing without plots): {plot_error}")
+        
         print(f"   Ready for crystallographic research! 🔬")
         
     except Exception as e:
