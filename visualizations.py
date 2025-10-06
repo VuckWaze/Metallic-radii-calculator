@@ -256,24 +256,56 @@ class PeriodicTableVisualizer:
                 axes[i].set_title(f'{family}', fontweight='bold')
                 axes[i].grid(True, alpha=0.3)
         
-        # Crystal structure complexity analysis
-        df_complexity = self.enhanced_df.copy()
-        df_complexity['Structure Complexity'] = df_complexity['Crystal System'].map({
-            'fcc': 1, 'hcp': 1, 'bcc': 1,
-            'diamond': 2, 'α-La': 2,
-            'α-Mn': 4, 'α-Np': 3, 'U': 3, 'α-Pa': 3,
-            'α-Ga': 3, 'mP16': 4, 'tI2': 2
-        }).fillna(3)  # Default complexity
+        # Radius range by element family - Box plot analysis
+        family_radius_data = []
+        family_labels = []
+        family_colors = []
         
-        scatter = axes[5].scatter(df_complexity['Atomic Number'], df_complexity['Structure Complexity'],
-                                c=df_complexity['Primary Radius (Å)'], cmap='spring', 
-                                s=40, alpha=0.7, edgecolors='black')
-        axes[5].set_xlabel('Atomic Number', fontweight='bold')
-        axes[5].set_ylabel('Structure Complexity', fontweight='bold')
-        axes[5].set_title('Crystal Structure Complexity', fontweight='bold')
-        cbar = plt.colorbar(scatter, ax=axes[5])
-        cbar.set_label('Metallic Radius (Å)', fontweight='bold')
-        axes[5].grid(True, alpha=0.3)
+        # Get families with sufficient data (at least 3 elements)
+        all_families = ['Alkali Metals', 'Alkaline Earth Metals', 'Transition Metals', 
+                       'Lanthanides', 'Actinides', 'Post-transition Metals']
+        
+        color_palette = sns.color_palette("Set2", len(all_families))
+        
+        for i, family in enumerate(all_families):
+            family_data = self.enhanced_df[self.enhanced_df['Element Category'] == family]
+            family_radii = family_data['Primary Radius (Å)'].dropna()
+            
+            if len(family_radii) >= 2:  # Need at least 2 points for a meaningful box plot
+                family_radius_data.append(family_radii.values)
+                family_labels.append(family)
+                family_colors.append(color_palette[i])
+        
+        if family_radius_data:
+            # Create box plot
+            box_plot = axes[5].boxplot(family_radius_data, 
+                                     labels=family_labels,
+                                     patch_artist=True,
+                                     showmeans=True,
+                                     meanline=True)
+            
+            # Color the boxes
+            for patch, color in zip(box_plot['boxes'], family_colors):
+                patch.set_facecolor(color)
+                patch.set_alpha(0.7)
+            
+            # Style the plot
+            axes[5].set_ylabel('Metallic Radius (Å)', fontweight='bold')
+            axes[5].set_title('Metallic Radius Distribution by Element Family', fontweight='bold')
+            axes[5].tick_params(axis='x', rotation=45)
+            axes[5].grid(True, alpha=0.3, axis='y')
+            
+            # Add statistical annotations
+            for i, (radii, label) in enumerate(zip(family_radius_data, family_labels)):
+                n_elements = len(radii)
+                axes[5].text(i+1, max(radii) + 0.05, f'n={n_elements}', 
+                           ha='center', va='bottom', fontsize=8, fontweight='bold')
+        else:
+            # Fallback if no family data available
+            axes[5].text(0.5, 0.5, 'Insufficient family data\nfor box plot analysis', 
+                       ha='center', va='center', transform=axes[5].transAxes,
+                       fontsize=12, fontweight='bold')
+            axes[5].set_title('Radius Distribution by Family', fontweight='bold')
         
         plt.tight_layout()
         
