@@ -1,23 +1,40 @@
-# Metallic Radii Calculator for Rare Earth Elements
-
-This project calculates metallic radii from crystallographic information files (CIF) of rare earth elements and provides comprehensive analysis through tables and visualizations.
+# Enhanced Metallic Radii Calculator
 
 ## Overview
 
-The metallic radius is a fundamental property that represents half the distance between the centers of two adjacent atoms in a metallic crystal. This calculator extracts crystallographic data from CIF files and computes metallic radii based on the crystal structure and nearest-neighbor distances.
+A comprehensive tool for calculating metallic radii across the entire periodic table using both traditional structure-specific methods and universal volume-based approaches with outlier-excluded correction functions.
+
+## Version 2.0 - Refactored Architecture
+
+This refactored version features:
+- **Modular Design**: Separated concerns into focused modules
+- **Professional Structure**: Clean, maintainable code architecture  
+- **Comprehensive Error Handling**: Robust validation and error reporting
+- **Enhanced Configuration**: Centralized settings and constants
+- **Improved Documentation**: Clear docstrings and comments
+- **Production Ready**: Optimized for research and industrial use
 
 ## Features
 
-- **CIF File Parsing**: Automatically extracts crystallographic data from CIF files
-- **Metallic Radius Calculation**: Computes metallic radii based on crystal structure:
-  - FCC (Face-Centered Cubic): r = a/(2√2)
-  - HCP (Hexagonal Close-Packed): r = a/2
-  - BCC (Body-Centered Cubic): r = a√3/4
-  - α-La structure: r = a/2
-- **Comprehensive Analysis**: 
-  - Summary tables with key properties
-  - Multiple visualization plots
-  - Statistical analysis
+### Dual-Method Calculations
+- **Traditional Structure-Specific**: 25+ crystal structure types supported
+- **Universal Volume-Based**: r = (3V_atomic / 4π)^(1/3) with corrections
+- **Corrected Volume Method**: Outlier-excluded correction functions (R² = 0.960)
+
+### Crystal Structure Support
+- Close-packed structures (fcc, hcp, α-La)
+- Body-centered cubic (bcc)
+- Complex actinide structures (α-Pa, α-Np, U)
+- Covalent structures (diamond, β-Sn)
+- Low-coordination structures (α-As, γ-Se)
+- Molecular crystals and van der Waals bonded systems
+
+### Advanced Features
+- Automatic averaging of multiple measurements per element
+- Comprehensive periodic table coverage (83+ elements)
+- Outlier detection and exclusion from corrections
+- Professional error handling and validation
+- Detailed progress reporting and statistics
 - **Data Export**: Results saved as CSV files for further analysis
 
 ## Crystal Structures Analyzed

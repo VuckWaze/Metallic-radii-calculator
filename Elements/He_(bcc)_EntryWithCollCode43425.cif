@@ -1,18 +1,16 @@
 
 #(C) 2025 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
-data_241937-ICSD
-_database_code_ICSD 241937
-_audit_creation_date 2017-08-01
-_chemical_name_common Vanadium
-_chemical_formula_structural V
-_chemical_formula_sum V1
-_exptl_crystal_density_diffrn 3.04
-_citation_title
-
-;
-Crystal structure of monoclinic samarium and cubic europium sesquioxides and
-bound coherent neutron scattering lengths of the isotopes 154Sm and 153Eu
-;
+data_43425-ICSD
+_database_code_ICSD 43425
+_audit_creation_date 2000-07-15
+_chemical_name_common 'Helium - gamma'
+_chemical_formula_structural He
+_chemical_formula_sum He1
+_chemical_name_structure_type W
+_exptl_crystal_density_diffrn 0.19
+_diffrn_ambient_temperature 1.73
+_diffrn_ambient_pressure 2900.
+_citation_title 'Structure of the gamma-form of solid He4'
 loop_
 _citation_id
 _citation_journal_full
@@ -21,25 +19,20 @@ _citation_journal_volume
 _citation_page_first
 _citation_page_last
 _citation_journal_id_ASTM
-primary 'Zeitschrift fuer Kristallographie - Crystalline Materials' 2016 231 517
-523 ZKCMAJ
+primary 'Physical Review Letters' 1962 8 469 470 PRLTAO
 loop_
 _citation_author_citation_id
 _citation_author_name
-primary 'Kohlmann, Holger'
-primary 'Hein, Christina'
-primary 'Kautenburger, Ralf'
-primary 'Hansen, Thomas C.'
-primary 'Ritter, Clemens'
-primary 'Doyle, Stephen'
-_cell_length_a 3.0299(13)
-_cell_length_b 3.0299(13)
-_cell_length_c 3.0299(13)
+primary 'Schuch, A.F.'
+primary 'Mills, R.L.'
+_cell_length_a 4.11(1)
+_cell_length_b 4.11
+_cell_length_c 4.11
 _cell_angle_alpha 90.
 _cell_angle_beta 90.
 _cell_angle_gamma 90.
-_cell_volume 27.82
-_cell_formula_units_Z 1
+_cell_volume 69.43
+_cell_formula_units_Z 2
 _space_group_name_H-M_alt 'I m -3 m'
 _space_group_IT_number 229
 loop_
@@ -144,7 +137,7 @@ _space_group_symop_operation_xyz
 loop_
 _atom_type_symbol
 _atom_type_oxidation_number
-V0+ 0
+He0+ 0
 loop_
 _atom_site_label
 _atom_site_type_symbol
@@ -153,7 +146,7 @@ _atom_site_Wyckoff_symbol
 _atom_site_fract_x
 _atom_site_fract_y
 _atom_site_fract_z
-_atom_site_U_iso_or_equiv
+_atom_site_B_iso_or_equiv
 _atom_site_occupancy
-V1 V0+ 2 a 0. 0. 0. 0. 0.49996
-#End of TTdata_241937-ICSD
+He1 He0+ 2 a 0 0 0 . 1.
+#End of TTdata_43425-ICSD

@@ -1,0 +1,25 @@
+{
+  "metallic_crystal_system": {
+    "bcc": 0.8665,
+    "fcc": 0.9047,
+    "hcp": 0.9086,
+    "\u03b1-La": 0.9078
+  },
+  "metallic_linear": {
+    "slope": 0.8819655521268631,
+    "intercept": 0.020012746409612703,
+    "r2": 0.9602090649357958
+  },
+  "metallic_coordination": {
+    "8.0": 0.861776176752449,
+    "12.0": 0.9068989924163627
+  },
+  "element_category": {
+    "Actinides": 0.8832802054183443,
+    "Alkali Metals": 0.8794361437123459,
+    "Alkaline Earth Metals": 0.9024443897348231,
+    "Lanthanides": 0.909335964574857,
+    "Post-transition Metals": 0.8807909524574415,
+    "Transition Metals": 0.8913144696751648
+  }
+}

@@ -1,17 +1,16 @@
 
 #(C) 2025 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
-data_292023-ICSD
-_database_code_ICSD 292023
-_audit_creation_date 2018-02-01
-_chemical_name_common Cerium
-_chemical_formula_structural Ce
-_chemical_formula_sum Ce1
+data_24602-ICSD
+_database_code_ICSD 24602
+_audit_creation_date 1980-01-01
+_audit_update_record 2006-04-01
+_chemical_name_common Neon
+_chemical_formula_structural Ne
+_chemical_formula_sum Ne1
 _chemical_name_structure_type Cu
-_exptl_crystal_density_diffrn 6.77
-_diffrn_ambient_temperature 298.
-_citation_title
-'The lattice spacings of thorium-cerium alloys at elevated temperatures'
-_publ_section_comment 'Cell and Type only determined'
+_exptl_crystal_density_diffrn 1.45
+_diffrn_ambient_temperature 13.
+_citation_title 'On the crystal structure of neon'
 loop_
 _citation_id
 _citation_journal_full
@@ -20,19 +19,25 @@ _citation_journal_volume
 _citation_page_first
 _citation_page_last
 _citation_journal_id_ASTM
-primary 'Journal of the Less-Common Metals' 1964 7 11 16 JCOMAH
+primary
+
+;
+Proceedings of the Koninklijke Nederlandse Akademie van Wetenschappen, Series
+B: Physical Sciences
+; 1930 33 255 257 KNWBAA
 loop_
 _citation_author_citation_id
 _citation_author_name
-primary 'Harris, I.R.'
-primary 'Raynor, G.V.'
-_cell_length_a 5.1612(2)
-_cell_length_b 5.1612(2)
-_cell_length_c 5.1612(2)
+primary 'de Smedt, J.'
+primary 'Keesom, W.H.'
+primary 'Mooy, H.H.'
+_cell_length_a 4.52
+_cell_length_b 4.52
+_cell_length_c 4.52
 _cell_angle_alpha 90.
 _cell_angle_beta 90.
 _cell_angle_gamma 90.
-_cell_volume 137.48
+_cell_volume 92.35
 _cell_formula_units_Z 4
 _space_group_name_H-M_alt 'F m -3 m'
 _space_group_IT_number 225
@@ -234,7 +239,7 @@ _space_group_symop_operation_xyz
 loop_
 _atom_type_symbol
 _atom_type_oxidation_number
-Ce0+ 0
+Ne0+ 0
 loop_
 _atom_site_label
 _atom_site_type_symbol
@@ -245,5 +250,5 @@ _atom_site_fract_y
 _atom_site_fract_z
 _atom_site_B_iso_or_equiv
 _atom_site_occupancy
-Ce1 Ce0+ 4 a 0 0 0 . 1.
-#End of TTdata_292023-ICSD
+Ne1 Ne0+ 4 a 0 0 0 . 1.
+#End of TTdata_24602-ICSD

@@ -1,16 +1,19 @@
 
 #(C) 2025 by FIZ Karlsruhe - Leibniz Institute for Information Infrastructure.  All rights reserved.
-data_53422-ICSD
-_database_code_ICSD 53422
-_audit_creation_date 2003-04-01
-_audit_update_record 2018-02-01
-_chemical_name_common Europium
-_chemical_formula_structural Eu
-_chemical_formula_sum Eu1
+data_241938-ICSD
+_database_code_ICSD 241938
+_audit_creation_date 2017-08-01
+_chemical_name_common Vanadium
+_chemical_formula_structural V
+_chemical_formula_sum V1
 _chemical_name_structure_type W
-_exptl_crystal_density_diffrn 5.24
-_citation_title 'The lattice parameters of La, Ce, Pr, Nd, Sm, Eu and Yb'
-_publ_section_comment 'Cell and Type only determined'
+_exptl_crystal_density_diffrn 6.09
+_citation_title
+
+;
+Crystal structure of monoclinic samarium and cubic europium sesquioxides and
+bound coherent neutron scattering lengths of the isotopes 154Sm and 153Eu
+;
 loop_
 _citation_id
 _citation_journal_full
@@ -19,19 +22,24 @@ _citation_journal_volume
 _citation_page_first
 _citation_page_last
 _citation_journal_id_ASTM
-primary 'Journal of the Less-Common Metals' 1974 34 225 231 JCOMAH
+primary 'Zeitschrift fuer Kristallographie - Crystalline Materials' 2016 231 517
+523 ZKCMAJ
 loop_
 _citation_author_citation_id
 _citation_author_name
-primary 'Beaudry, B.J.'
-primary 'Palmer, P.E.'
-_cell_length_a 4.5824(4)
-_cell_length_b 4.5824(4)
-_cell_length_c 4.5824(4)
+primary 'Kohlmann, Holger'
+primary 'Hein, Christina'
+primary 'Kautenburger, Ralf'
+primary 'Hansen, Thomas C.'
+primary 'Ritter, Clemens'
+primary 'Doyle, Stephen'
+_cell_length_a 3.0283
+_cell_length_b 3.0283
+_cell_length_c 3.0283
 _cell_angle_alpha 90.
 _cell_angle_beta 90.
 _cell_angle_gamma 90.
-_cell_volume 96.22
+_cell_volume 27.77
 _cell_formula_units_Z 2
 _space_group_name_H-M_alt 'I m -3 m'
 _space_group_IT_number 229
@@ -137,7 +145,7 @@ _space_group_symop_operation_xyz
 loop_
 _atom_type_symbol
 _atom_type_oxidation_number
-Eu0+ 0
+V0+ 0
 loop_
 _atom_site_label
 _atom_site_type_symbol
@@ -146,7 +154,7 @@ _atom_site_Wyckoff_symbol
 _atom_site_fract_x
 _atom_site_fract_y
 _atom_site_fract_z
-_atom_site_B_iso_or_equiv
+_atom_site_U_iso_or_equiv
 _atom_site_occupancy
-Eu1 Eu0+ 2 a 0 0 0 . 1.
-#End of TTdata_53422-ICSD
+V1 V0+ 2 a 0. 0. 0. 0.0038 1.
+#End of TTdata_241938-ICSD
